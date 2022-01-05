@@ -10,7 +10,7 @@
 
 .utility-button {
     border: none;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     padding: 0.5em 1em;
     transition: background-color 0.1s, border-radius 0.1s ease-in-out,
         transform 0.1s;

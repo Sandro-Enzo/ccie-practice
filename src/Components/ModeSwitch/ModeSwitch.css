@@ -1,0 +1,10 @@
+.mode-switch-container {
+    position: absolute;
+    right: 10vw;
+    top: 5vh;
+}
+
+.mode-switch-button {
+    font-size: 2rem;
+    border: none;
+}

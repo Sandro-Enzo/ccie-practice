@@ -8,11 +8,13 @@ import './Question.css';
 interface IQuestionProps {
     question: IQuestion;
     setCurrentQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
+    questionAmount: number;
 }
 
 export default function Question({
     question,
     setCurrentQuestionIndex,
+    questionAmount,
 }: IQuestionProps) {
     const questionContainer = useRef<HTMLDivElement>(null);
 
@@ -62,7 +64,7 @@ export default function Question({
         if (!correct) return;
 
         setCurrentQuestionIndex((prev) => {
-            return (prev + 1) % question.format.length;
+            return (prev + 1) % questionAmount;
         });
     }
 

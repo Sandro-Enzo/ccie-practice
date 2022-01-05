@@ -13,7 +13,9 @@ function App() {
     //     currentFileName
     // );
 
-    const question = convert(currentFile).questions[currentQuestionIndex];
+    const questions = convert(currentFile);
+
+    const question = questions.questions[currentQuestionIndex];
 
     // console.log('question: ' + question);
 
@@ -27,6 +29,7 @@ function App() {
             <Question
                 question={question}
                 setCurrentQuestionIndex={setCurrentQuestionIndex}
+                questionAmount={questions.questions.length}
             />
         </div>
     );

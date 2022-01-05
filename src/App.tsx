@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Question from './Components/Question/Question';
+import Sidebar from './Components/Sidebar/Sidebar';
+import convert from './util/csvToJson';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [currentFile, setCurrentFile] = useState('');
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+    // console.log(
+    //     'currentFile + currentFileName: ' + currentFile,
+    //     currentFileName
+    // );
+
+    const question = convert(currentFile).questions[currentQuestionIndex];
+
+    // console.log('question: ' + question);
+
+    return (
+        <div className='App'>
+            <Sidebar
+                currentFile={currentFile}
+                setCurrentFile={setCurrentFile}
+                setCurrentQuestionIndex={setCurrentQuestionIndex}
+            />
+            <Question
+                question={question}
+                setCurrentQuestionIndex={setCurrentQuestionIndex}
+            />
+        </div>
+    );
 }
 
 export default App;

@@ -1,0 +1,39 @@
+.hint-button {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.answer-input {
+    outline: none;
+    border: none;
+    font-size: 1em;
+    padding: 0;
+    text-align: center;
+    transition: transform 0.1s;
+    width: 100%;
+}
+
+.answer-input:hover {
+    transform: scale(110%);
+}
+
+.hint-div {
+    color: gold !important;
+}
+
+.wrong-div {
+    color: red !important;
+}
+
+.answer-div {
+    text-align: center;
+    width: 100%;
+    color: #b0b0b0;
+}
+
+.answer {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+    width: 100%;
+}

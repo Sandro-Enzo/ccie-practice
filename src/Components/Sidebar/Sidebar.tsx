@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import convert from '../../util/csvToJson';
+import { SwitchModes } from '../../util/enums';
 import './Sidebar.css';
 
 interface ISidebarProps {
     currentFile: string;
+    difficulty: SwitchModes;
     setCurrentFile: React.Dispatch<React.SetStateAction<string>>;
     setCurrentQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
+    setNumberOfInputs: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Sidebar({
     currentFile,
+    difficulty,
     setCurrentFile,
     setCurrentQuestionIndex,
+    setNumberOfInputs,
 }: ISidebarProps) {
     const [files, setFiles] = useState<string[]>([]);
     const [filenames, setFilenames] = useState<string[]>([]);
@@ -39,8 +45,7 @@ export default function Sidebar({
     function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         const button = e.target as HTMLButtonElement;
 
-        setCurrentFile(button.getAttribute('data-file') as string);
-        setCurrentQuestionIndex(0);
+        setNewFile(button.getAttribute('data-file') as string);
     }
 
     function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -61,8 +66,8 @@ export default function Sidebar({
                     (inputElement.files as FileList).item(0) as File
                 ).name;
 
-                setCurrentFile(value);
-                setCurrentQuestionIndex(0);
+                setNewFile(value);
+
                 setFiles((prev) => {
                     return [...prev, value];
                 });
@@ -85,6 +90,55 @@ export default function Sidebar({
             });
         });
     }
+
+    function setNewFile(value: string) {
+        setCurrentFile(value);
+        setCurrentQuestionIndex(0);
+
+        const obj = convert(value);
+
+        let noi = 0;
+
+        if (difficulty === SwitchModes.easy) {
+            obj.questions.forEach((value) => {
+                noi += value.answers.length;
+            });
+        } else if (difficulty === SwitchModes.hard) {
+            obj.questions.forEach((value) => {
+                let intermediate = 0;
+                value.answers.forEach(
+                    (value) => (intermediate += value.length)
+                );
+                noi += intermediate;
+            });
+        }
+
+        setNumberOfInputs(noi);
+    }
+
+    useEffect(() => {
+        const obj = convert(currentFile);
+
+        console.dir(obj);
+
+        let noi = 0;
+
+        if (difficulty === SwitchModes.easy) {
+            obj.questions.forEach((value) => {
+                noi += value.answers.length;
+            });
+        } else if (difficulty === SwitchModes.hard) {
+            obj.questions.forEach((value) => {
+                let intermediate = 0;
+                value.answers.forEach(
+                    (value) => (intermediate += value.length)
+                );
+                noi += intermediate;
+            });
+        }
+
+        setNumberOfInputs(noi);
+    }, [difficulty]);
 
     function handleClear() {
         setFiles([]);

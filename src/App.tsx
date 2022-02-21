@@ -10,17 +10,12 @@ function App() {
     const [currentFile, setCurrentFile] = useState('');
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [difficulty, setDifficulty] = useState(SwitchModes.easy);
-
-    // console.log(
-    //     'currentFile + currentFileName: ' + currentFile,
-    //     currentFileName
-    // );
+    const [numberOfInputs, setNumberOfInputs] = useState(0);
+    const [numberOfCorrectInputs, setNumberOfCorrectInputs] = useState(0);
 
     const questions = convert(currentFile);
 
     const question = questions.questions[currentQuestionIndex];
-
-    // console.log('question: ' + question);
 
     return (
         <div className='App'>
@@ -28,12 +23,18 @@ function App() {
                 currentFile={currentFile}
                 setCurrentFile={setCurrentFile}
                 setCurrentQuestionIndex={setCurrentQuestionIndex}
+                setNumberOfInputs={setNumberOfInputs}
+                difficulty={difficulty}
             />
             <ModeSwitch difficulty={difficulty} setDifficulty={setDifficulty} />
             <Question
                 question={question}
                 setCurrentQuestionIndex={setCurrentQuestionIndex}
                 questionAmount={questions.questions.length}
+                numberOfInputs={numberOfInputs}
+                numberOfCorrectInputs={numberOfCorrectInputs}
+                setNumberOfCorrectInputs={setNumberOfCorrectInputs}
+                difficulty={difficulty}
             />
         </div>
     );
